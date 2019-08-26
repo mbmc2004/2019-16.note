@@ -1,5 +1,7 @@
-const auth = firebase.auth();
-const google = new firebase.auth.GoogleAuthProvider();
+// firebase -> -문서(docs) -> 웹 시작하기 ->아래로 내려서 인증클릭-> 내려서 구글로 로그인 ->var provider = new firebase.auth.GoogleAuthProvider(); 붙이기
+
+const auth = firebase.auth(); //firebase 안에 auth라는 곳을 auth로 만든다
+const google = new firebase.auth.GoogleAuthProvider();  //firebase에서 계약하여 이용자들에게 사이트를 사용할수 있도록 넣어둔것이다.
 var user = null;	// 로그인한 사용자의 정보를 저장하는 변수
 
 // 인증기능 만들기
@@ -37,7 +39,7 @@ function viewChg(state){
         default:
                 document.querySelector(".email-txt").innerHTML="";
                 document.querySelector(".email").style.display="none";
-                document.querySelector("#btLogin").style.display="flex";
+                document.querySelector("#btLogin").style.display="inline-block";
             break;    
     }
     
