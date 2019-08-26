@@ -26,13 +26,13 @@ function viewChg(state){
     switch(state){
         case "R":
             console.log(user.photoURL);
-            if(user.photoURL) url =user.photoURL;
-            else url ="";
-            if(user.photoURL!=undefined)
-                document.querySelector(".email img").setAttribute("src",url);
-            document.querySelector(".email-txt").innerHTML=user.email;
-            document.querySelector(".email").style.display="flex";
-            document.querySelector("#btLogin").style.display="none";
+            imagesLoaded( document.querySelector('.email img'), () => {
+                document.querySelector(".email img").setAttribute("src",user.photoURL);  
+                document.querySelector(".email-txt").innerHTML=user.email;
+                document.querySelector(".email").style.display="flex";
+                document.querySelector("#btLogin").style.display="none";
+              });
+            document.querySelector(".email img").setAttribute("src",user.photoURL);
             break;
         default:
                 document.querySelector(".email-txt").innerHTML="";
