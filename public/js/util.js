@@ -6,7 +6,7 @@ function dspDate(d,type=1){
     var day = d.getDate()+"일"; //현재 일  (1~31)
     var hour = d.getHours()+"시"; //현재시간 (0~23)
     var min = d.getMinutes()+"분"; //현재분 (0~59)
-    var sec = d.getSeconds();+"초"; //현재초 (0~59)
+    var sec = d.getSeconds()+"초"; //현재초 (0~59)
     var returnStr;
     /* 
     type 0 : '2019년 8월 11일 9시 8분 11초'
