@@ -1,5 +1,6 @@
 // '2019년 8월 11일 9시 8분 11초'형식으로 보내주는 함수
-function dspDate(d,type=1){
+function dspDate(d,type){
+    var type = typeof type !== 'undefined' ? type : 0; //type은 typeof type가 undefinen 이면 (false)
     var monthArr=["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월"]
     var year = d.getFullYear()+"년"; // 현재 년도 (2019)
     var month = monthArr[d.getMonth()]+[]; // 현재월-1 (0~11) 배열이기때문이다

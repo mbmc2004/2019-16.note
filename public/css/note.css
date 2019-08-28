@@ -19,6 +19,8 @@ display: none;
 .lists{
     position: absolute;
     z-index: 999;
+    height: 100%;
+    overflow: auto;
 
 }
 

@@ -64,14 +64,23 @@ function onAdd(data) {
 		outerCls = "justify-content-end";
 		innerCls = "bg-success";
 	}
-	var html = `
+/* 	var html = `
 	<div class="d-flex ${outerCls}" style="flex: 1 0 100%;">
 		<ul class="chat p-3 text-light mb-5 position-relative ${innerCls}">
 			<li class="f-0875">${data.val().name} : </li>
 			<li class="f-125">${data.val().content}</li>
 			<li class="f-0875 text-secondary position-absolute mt-3">${desDate(new Date(data.val().time))}</li>
 		</ul>
-	</div>`;
+	</div>`; */
+
+var html='<div class="d-flex '+outerCls+'" style="flex: 1 0 100%;">';
+html += '<ul class="chat p-3 text-light mb-5 position-relative '+innerCls+'">';
+html += '<li class="f-0875">'+data.val().name+': </li>';
+html += '<li class="f-125">'+data.val().content+'</li>';
+html += '<li class="f-0875 text-secondary position-absolute mt-3">';
+html += dspDate(new Date(data.val().time),5) +'</li>';
+html += '</ul>';
+html += '</div>';
 	_chats.innerHTML = html + _chats.innerHTML;
 }
 
