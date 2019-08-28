@@ -1,20 +1,56 @@
 <!-- md:mark down -->
 # Firebase 배워보자
+
 ## Firebase 설치
 1. 파이서베이스를 설치하기 위해서는 https://nodejs.org 에서 node.js를 먼저 설치한 이후
 2. 아래와 같이 터미널 창에서 -g(Global option)옵션으로 firebase를 설치한다.
 ```console
 npm i -g firebase-tools
 ```
-## Firebase
 
+## Firebase 최초 구동
+1. 터미널 창에서 아래 와같이 작성 후 실행된 브라우저에서 로그인을 진행하며, 로그인 할 계정은
+firebase.com의 회원계정 (구글계정)과 일치하여야 한다.
+```bash
+firebase login
+```
 
+## Firebase 프로젝트 만들기
+1. 프로젝트 폴더를 생성 후 `vscode`를 실행하여 프로젝트 폴더를 연다.
+2. `vscode`의 터미널 창에서 아래와 같이 실행하여 프로젝트 Initialize를 해준다.
+```
+firebase init
+```
+3. init을 진행중 선택화면이 나오면 프로젝트에 포함할 서비스를 선택한다.
+* database
+* auth
+* storage
+* hosting  
+* ...
+4. 이후 public(웹의 루트폴더) 선택 등 옵션은 우선적으로 `y` 를 눌러 진행한다.
+5. 프로젝트의 선택은 미리 https://firebase.com 에서 생성한 프로젝트의 id를 선택한다.
+6. public 폴더에 우리가 필요한 `css/html/img/js` 등의 폴더를 생성한다.
 
-<!-- 
-# 제목 1 선이 생긴다 ---도 선이생긴다
-## 제목 2
-### 제목 3
-#### 제목 4
-##### 제목 5
-###### 제목 6 
--->
+## Firebase 프로젝트 코딩
+1. `프로젝트 시작 파일(index.html)`에 아래와 같은 코드를 포함시킨다.
+```html
+ <!-- firebase js module -->
+    <script src="/__/firebase/6.4.2/firebase-app.js"></script>
+    <script src="/__/firebase/6.4.2/firebase-auth.js"></script>
+    <script src="/__/firebase/6.4.2/firebase-database.js"></script>
+    <script src="/__/firebase/6.4.2/firebase-messaging.js"></script>
+    <script src="/__/firebase/6.4.2/firebase-storage.js"></script>
+    <script src="/__/firebase/init.js"></script>
+ <!-- 나의 js module -->
+    <script src="../js/util.js"></script>
+    <script src="../js/note.js"></script>
+```
+2. 프로젝트 구동
+* 개발중일때 (개별적 node 서버를 구동하여 확인하며 개발한다.)
+```
+firebase serve
+```
+* 실제 서비를 배포할때
+```
+firebase deploy
+```
