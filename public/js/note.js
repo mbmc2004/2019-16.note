@@ -5,11 +5,14 @@ const google = new firebase.auth.GoogleAuthProvider(); //firebase에서 계약�
 const db = firebase.database();
 var user = null; // 로그인한 사용자의 정보를 저장하는 변수
 var nowKey= null;
+
+
 const _btLogin = document.querySelector("#btLogin");
 const _btLogout = document.querySelector("#btLogout");
 const _btSave = document.querySelector("#btSave");
 const _content = document.querySelector("#noteTxt");
 const _lists = document.querySelector(".lists");
+const _btWing = document.querySelector("#btWing");
 
 // 인증기능 만들기
 // $("#btLogin").click(function(e){});
@@ -41,18 +44,30 @@ _btSave.addEventListener("click", (e) => {
         return false;
 
     }
-    db.ref("root/notes/" + user.uid).push({
+    if(nowKey == null){
+      //추가하기
+      db.ref("root/notes/" + user.uid).push({
         content: content,
         time: new Date().getTime(),
         icon: content.substring(0, 1) //내용에서 0번째 자리에서1번째 자리까지 가져와
     }).key;
+ 
+
+    }else{
+      //수정하기
+    db.ref("root/notes/"+user.uid+"/"+nowKey).update({//push는 데이터를 저장 updata 수정 remove 삭제 once하나만 가져오기
+        content:content,
+        icon: content.substring(0, 1)
+    })
+    }
     _content.value = "";
+    nowKey =null;
 });
 
 
 //Database init
 function dbInit() {
-    _lists.innerHTML = "";
+    _lists.innerHTML = '';
     db.ref("root/notes/" + user.uid).on("child_added", onAdd);
     db.ref("root/notes/" + user.uid).on("child_removed", onRev); //데이터가 삭제 되면 child_removed 가 시작되면 onRev 함수를 실행해주세요
     db.ref("root/notes/" + user.uid).on("child_changed", onChg);
@@ -64,10 +79,10 @@ function onAdd(data) {
     var html = '';
     html += '<ul class="list border border-white rounded p-3 mt-3 bg-primary text-light position-relative" id="' + data.key + '"onclick="dataGet(this)">'; //data.key는 메모장에 씌여진 메모 하나하나의 key이다
     html += '<li class="d-flex">';
-    html += '<h1 class="bg-light text-primary rounded-circle text-center mr-3 flex-shring-0" style="width:56px; height: 56px; line-height: 55px;">' + data.val().icon + '</h1>';
-    html += '<div>' + data.val().content.substring(0, 60) + '</div>';
+    html += '<h1 class="icon bg-light text-primary rounded-circle text-center mr-3 flex-shring-0" style="width:56px; height: 56px; line-height: 55px;">' + data.val().icon + '</h1>';
+    html += '<div class="cont">' + data.val().content.substring(0, 60) + '</div>';
     html += '</li>';
-    html += '<li>' + dspDate(new Date(data.val().time)) + '</li>';
+    html += '<li>' + dspDate(new Date(data.val().time),2) + '</li>';
     html += '<li class="position-absolute" style="bottom:5px; right:10px; cursor: pointer;">';
     html += '<i class="fas fa-trash-alt" onclick="dataRev(this);"></i>';
     html += '</li>';
@@ -83,6 +98,9 @@ function onRev(data) {
 };
 // onChg 콜백함수
 function onChg(data) {
+    var id = data.key;
+    document.querySelector("#" + id+" .icon").innerHTML=data.val().icon; //id밑에 있는 icon이  "#" + id+"(띄어쓰고).icon" 이다
+    document.querySelector("#" + id+" .cont").innerHTML=data.val().content.substring(0, 60);
 
 }
 
@@ -105,7 +123,33 @@ nowKey =obj.getAttribute("id")  //저장이라는 버튼은 신규 저장과 수
 _content.value =data.val().content
 }); //once는 단한번만 실행시켜줄때 사용, 즉 value데이타를 한번만 가져오고 난후에(then) 함수를 실행시켜주세요 라는뜻
 }
+//onClick - btWing
+_btWing.addEventListener("click",()=>{
+    console.log(getComputedStyle(_lists).left.replace("px","")) //replace px을 빈칸으로 만든다
+var left = getComputedStyle(_lists).left.replace("px","")
+console.log(getComputedStyle(_lists).width);
+var tarLeft ="-"+ getComputedStyle(_lists).width;
+if(left ==0){
+    _lists.style.left = tarLeft;
+    _btWing.querySelector(".fas").classList.remove("fa-angle-left")
+    _btWing.querySelector(".fas").classList.add("fa-angle-right")
+}else{
+    _lists.style.left = 0;
+    _btWing.querySelector(".fas").classList.add("fa-angle-left")
+    _btWing.querySelector(".fas").classList.remove("fa-angle-right")
+}
+})
 
+//onResize 함수
+window.addEventListener("resize",function(e){
+console.log(getComputedStyle(_lists).position)  //_lists.style.은 인라인상에서의 스타일만 찾는다 getComputedStyle("_lists") 는 css를 찾아준다
+var position = getComputedStyle(_lists).position
+if(position =="absolute"){
+
+}else{
+
+}
+})
 
 
 //화면 전환 함수
